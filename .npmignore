@@ -1,0 +1,7 @@
+src/
+docs/
+.claude/
+*.scored.md
+CLAUDE.md
+SECURITY.md
+tsconfig.json

@@ -1,0 +1,22 @@
+# Environment
+.env
+.env.*
+
+# IDE
+.idea
+.vscode
+*.swp
+*.swo
+
+# Build artifacts
+spec-score
+dist/
+node_modules/
+
+# Generated
+*.scored.md
+article.md
+
+# OS
+.DS_Store
+Thumbs.db

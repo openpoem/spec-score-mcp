@@ -1,0 +1,42 @@
+{
+  "name": "spec-score-mcp",
+  "version": "2.0.0",
+  "description": "Score your specs before feeding them to an LLM. MCP server with radar chart visualization.",
+  "type": "module",
+  "main": "dist/mcp.js",
+  "bin": {
+    "spec-score-mcp": "dist/mcp.js"
+  },
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "mcp",
+    "spec",
+    "score",
+    "llm",
+    "ai",
+    "quality",
+    "radar-chart",
+    "model-context-protocol"
+  ],
+  "author": "OpenPoem <info@openpoem.org>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/openpoem/spec-score-mcp.git"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.26.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.7.0"
+  }
+}
