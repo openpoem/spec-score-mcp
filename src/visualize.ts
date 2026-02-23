@@ -93,8 +93,8 @@ export function generateRadarSVG(config: ChartConfig): string {
   // Verdict badge
   const verdictY = h - 36;
   const verdictLabel = verdict.split(' - ')[0];
-  const verdictEl = `
-    <rect x="80" y="${verdictY - 18}" width="320" height="34" rx="6" fill="${verdictBg(balance)}" />
+  const verdictEl = 
+    `<rect x="80" y="${verdictY - 18}" width="320" height="34" rx="6" fill="${verdictBg(balance)}" />
     <text x="${cx}" y="${verdictY + 5}" text-anchor="middle" fill="white" font-size="14" font-weight="bold" font-family="system-ui, -apple-system, sans-serif">${verdictLabel}</text>`;
 
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" style="background:#1a1a1a;border-radius:12px">
