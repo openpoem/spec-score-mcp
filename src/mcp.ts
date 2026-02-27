@@ -107,112 +107,122 @@ The tool generates a radar chart: green = balanced (ready), yellow = moderate (g
   },
 ];
 
-const server = new Server(
-  { name: 'spec-score-mcp', version: '2.0.0' },
-  { capabilities: { tools: {} } },
-);
+function createServer() {
+  const server = new Server(
+    { name: 'spec-score-mcp', version: '2.0.0' },
+    { capabilities: { tools: {} } },
+  );
 
-server.setRequestHandler(ListToolsRequestSchema, async () => ({ tools }));
+  server.setRequestHandler(ListToolsRequestSchema, async () => ({ tools }));
 
-server.setRequestHandler(CallToolRequestSchema, async (request) => {
-  const { name, arguments: args } = request.params;
+  server.setRequestHandler(CallToolRequestSchema, async (request) => {
+    const { name, arguments: args } = request.params;
 
-  try {
-    switch (name) {
-      case 'spec_score': {
-        const result = scoreFromAxes({
-          completeness: args?.completeness as number,
-          clarity: args?.clarity as number,
-          constraints: args?.constraints as number,
-          specificity: args?.specificity as number,
-          weakest: args?.weakest as string,
-          tip: args?.tip as string,
-        });
-        return {
-          content: [{
-            type: 'text',
-            text: JSON.stringify({
-              verdict: result.verdict,
-              balance: result.balance,
-              balance_label: balanceLabel(result.balance),
-              axes: result.axes,
-              weakest: result.details.weakest,
-              strongest: result.details.strongest,
-              tip: result.balance < 0.6
-                ? `Your weakest axis is "${result.details.weakest}". Strengthen it to improve LLM output quality.`
-                : result.balance < 0.75
-                ? 'Almost there. Small improvements will make this spec reliable for LLM consumption.'
-                : 'This spec is well-balanced. LLM output should be reliable.',
-            }, null, 2),
-          }],
-        };
+    try {
+      switch (name) {
+        case 'spec_score': {
+          const result = scoreFromAxes({
+            completeness: args?.completeness as number,
+            clarity: args?.clarity as number,
+            constraints: args?.constraints as number,
+            specificity: args?.specificity as number,
+            weakest: args?.weakest as string,
+            tip: args?.tip as string,
+          });
+          return {
+            content: [{
+              type: 'text',
+              text: JSON.stringify({
+                verdict: result.verdict,
+                balance: result.balance,
+                balance_label: balanceLabel(result.balance),
+                axes: result.axes,
+                weakest: result.details.weakest,
+                strongest: result.details.strongest,
+                tip: result.balance < 0.6
+                  ? `Your weakest axis is "${result.details.weakest}". Strengthen it to improve LLM output quality.`
+                  : result.balance < 0.75
+                  ? 'Almost there. Small improvements will make this spec reliable for LLM consumption.'
+                  : 'This spec is well-balanced. LLM output should be reliable.',
+              }, null, 2),
+            }],
+          };
+        }
+
+        case 'spec_visualize': {
+          const result = scoreFromAxes({
+            completeness: args?.completeness as number,
+            clarity: args?.clarity as number,
+            constraints: args?.constraints as number,
+            specificity: args?.specificity as number,
+            weakest: args?.weakest as string,
+            tip: args?.tip as string,
+          });
+          const svg = generateRadarSVG({
+            values: result.vector,
+            balance: result.balance,
+            verdict: result.verdict,
+            title: args?.title as string,
+          });
+          return { content: [{ type: 'text', text: svg }] };
+        }
+
+        case 'spec_compare': {
+          const leftResult = scoreFromAxes({
+            completeness: args?.left_completeness as number,
+            clarity: args?.left_clarity as number,
+            constraints: args?.left_constraints as number,
+            specificity: args?.left_specificity as number,
+            weakest: args?.left_weakest as string,
+            tip: args?.left_tip as string,
+          });
+          const rightResult = scoreFromAxes({
+            completeness: args?.right_completeness as number,
+            clarity: args?.right_clarity as number,
+            constraints: args?.right_constraints as number,
+            specificity: args?.right_specificity as number,
+            weakest: args?.right_weakest as string,
+            tip: args?.right_tip as string,
+          });
+          const svg = generateComparisonSVG(
+            {
+              values: leftResult.vector,
+              balance: leftResult.balance,
+              verdict: leftResult.verdict,
+              title: args?.left_title as string,
+            },
+            {
+              values: rightResult.vector,
+              balance: rightResult.balance,
+              verdict: rightResult.verdict,
+              title: args?.right_title as string,
+            },
+            args?.title as string,
+          );
+          return { content: [{ type: 'text', text: svg }] };
+        }
+
+        default:
+          return { content: [{ type: 'text', text: `Unknown tool: ${name}` }], isError: true };
       }
-
-      case 'spec_visualize': {
-        const result = scoreFromAxes({
-          completeness: args?.completeness as number,
-          clarity: args?.clarity as number,
-          constraints: args?.constraints as number,
-          specificity: args?.specificity as number,
-          weakest: args?.weakest as string,
-          tip: args?.tip as string,
-        });
-        const svg = generateRadarSVG({
-          values: result.vector,
-          balance: result.balance,
-          verdict: result.verdict,
-          title: args?.title as string,
-        });
-        return { content: [{ type: 'text', text: svg }] };
-      }
-
-      case 'spec_compare': {
-        const leftResult = scoreFromAxes({
-          completeness: args?.left_completeness as number,
-          clarity: args?.left_clarity as number,
-          constraints: args?.left_constraints as number,
-          specificity: args?.left_specificity as number,
-          weakest: args?.left_weakest as string,
-          tip: args?.left_tip as string,
-        });
-        const rightResult = scoreFromAxes({
-          completeness: args?.right_completeness as number,
-          clarity: args?.right_clarity as number,
-          constraints: args?.right_constraints as number,
-          specificity: args?.right_specificity as number,
-          weakest: args?.right_weakest as string,
-          tip: args?.right_tip as string,
-        });
-        const svg = generateComparisonSVG(
-          {
-            values: leftResult.vector,
-            balance: leftResult.balance,
-            verdict: leftResult.verdict,
-            title: args?.left_title as string,
-          },
-          {
-            values: rightResult.vector,
-            balance: rightResult.balance,
-            verdict: rightResult.verdict,
-            title: args?.right_title as string,
-          },
-          args?.title as string,
-        );
-        return { content: [{ type: 'text', text: svg }] };
-      }
-
-      default:
-        return { content: [{ type: 'text', text: `Unknown tool: ${name}` }], isError: true };
+    } catch (error) {
+      return {
+        content: [{ type: 'text', text: `Error: ${error instanceof Error ? error.message : String(error)}` }],
+        isError: true,
+      };
     }
-  } catch (error) {
-    return {
-      content: [{ type: 'text', text: `Error: ${error instanceof Error ? error.message : String(error)}` }],
-      isError: true,
-    };
-  }
-});
+  });
+
+  return server;
+}
+
+// Smithery sandbox scan support
+export function createSandboxServer() {
+  return createServer();
+}
 
 async function main() {
+  const server = createServer();
   const transport = new StdioServerTransport();
   await server.connect(transport);
   console.error('Spec Score MCP server running (v2 - LLM-native scoring)');
