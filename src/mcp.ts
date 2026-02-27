@@ -108,7 +108,7 @@ The tool generates a radar chart: green = balanced (ready), yellow = moderate (g
 ];
 
 const server = new Server(
-  { name: 'spec-score', version: '2.0.0' },
+  { name: 'spec-score-mcp', version: '2.0.0' },
   { capabilities: { tools: {} } },
 );
 
