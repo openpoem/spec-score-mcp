@@ -4,6 +4,7 @@
   "description": "Score your specs before feeding them to an LLM. MCP server with radar chart visualization.",
   "type": "module",
   "main": "dist/mcp.js",
+  "module": "src/mcp.ts",
   "bin": {
     "spec-score-mcp": "dist/mcp.js"
   },
