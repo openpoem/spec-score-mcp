@@ -1,0 +1,211 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Spec Score API",
+    "description": "Score specs on 4 axes (completeness, clarity, constraints, specificity) and generate radar chart visualizations.",
+    "version": "2.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://spec-score-mcp.vercel.app"
+    }
+  ],
+  "paths": {
+    "/api/score": {
+      "post": {
+        "operationId": "scoreSpec",
+        "summary": "Score a spec on 4 axes and get balance score + verdict",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ScoreRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Scoring result with verdict and balance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScoreResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/visualize": {
+      "post": {
+        "operationId": "visualizeSpec",
+        "summary": "Score a spec and return an SVG radar chart",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VisualizeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "SVG radar chart image",
+            "content": {
+              "image/svg+xml": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/compare": {
+      "post": {
+        "operationId": "compareSpecs",
+        "summary": "Compare two specs side-by-side with radar charts",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompareRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Side-by-side SVG comparison chart",
+            "content": {
+              "image/svg+xml": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AxisScores": {
+        "type": "object",
+        "required": ["completeness", "clarity", "constraints", "specificity"],
+        "properties": {
+          "completeness": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "description": "Can the LLM understand the full scope? (0=vague idea, 1=complete)"
+          },
+          "clarity": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "description": "Is it unambiguous? (0=multiple interpretations, 1=one clear interpretation)"
+          },
+          "constraints": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "description": "Are boundaries defined? (0=no limits, 1=clear scope and non-goals)"
+          },
+          "specificity": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "description": "Concrete testable details? (0=no criteria, 1=verifiable outcomes)"
+          },
+          "weakest": {
+            "type": "string",
+            "description": "Which axis is weakest"
+          },
+          "tip": {
+            "type": "string",
+            "description": "One concrete suggestion to improve the weakest axis"
+          }
+        }
+      },
+      "ScoreRequest": {
+        "$ref": "#/components/schemas/AxisScores"
+      },
+      "VisualizeRequest": {
+        "allOf": [
+          { "$ref": "#/components/schemas/AxisScores" },
+          {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "description": "Optional title above the radar chart"
+              }
+            }
+          }
+        ]
+      },
+      "CompareRequest": {
+        "type": "object",
+        "required": ["left", "right"],
+        "properties": {
+          "left": {
+            "allOf": [
+              { "$ref": "#/components/schemas/AxisScores" },
+              {
+                "type": "object",
+                "properties": {
+                  "title": { "type": "string", "description": "Title for left chart" }
+                }
+              }
+            ]
+          },
+          "right": {
+            "allOf": [
+              { "$ref": "#/components/schemas/AxisScores" },
+              {
+                "type": "object",
+                "properties": {
+                  "title": { "type": "string", "description": "Title for right chart" }
+                }
+              }
+            ]
+          },
+          "title": {
+            "type": "string",
+            "description": "Main title above both charts"
+          }
+        }
+      },
+      "ScoreResponse": {
+        "type": "object",
+        "properties": {
+          "verdict": { "type": "string" },
+          "balance": { "type": "number" },
+          "balance_label": { "type": "string", "enum": ["BALANCED", "MODERATE", "SPIKED"] },
+          "axes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "axis": { "type": "string" },
+                "value": { "type": "number" }
+              }
+            }
+          },
+          "weakest": { "type": "string" },
+          "strongest": { "type": "string" },
+          "tip": { "type": "string" }
+        }
+      }
+    }
+  }
+}
