@@ -1,6 +1,7 @@
 {
   "name": "spec-score-mcp",
-  "version": "2.0.0",
+  "version": "2.0.2",
+  "mcpName": "io.github.openpoem/spec-score-mcp",
   "description": "Score your specs before feeding them to an LLM. MCP server with radar chart visualization.",
   "type": "module",
   "main": "dist/mcp.js",

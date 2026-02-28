@@ -1,0 +1,56 @@
+{
+  "manifest_version": "0.2",
+  "name": "spec-score-mcp",
+  "version": "2.0.0",
+  "description": "Score your specs before feeding them to an LLM. MCP server with radar chart visualization.",
+  "long_description": "Spec Score scores your specs on 4 axes (completeness, clarity, constraints, specificity) before you feed them to an LLM. Balance matters more than individual scores — a spec scoring 0.50 on all axes produces better output than one scoring 0.95/0.95/0.20/0.90. The weak axis is where the LLM will improvise. Three tools: spec_score (JSON scoring with verdict), spec_visualize (SVG radar chart), and spec_compare (side-by-side comparison).",
+  "author": {
+    "name": "OpenPoem <info@openpoem.org>",
+    "email": "info@openpoem.org",
+    "url": "https://github.com/openpoem/spec-score-mcp"
+  },
+  "homepage": "https://spec-score-mcp.vercel.app",
+  "documentation": "https://github.com/openpoem/spec-score-mcp#readme",
+  "support": "https://github.com/openpoem/spec-score-mcp/issues",
+  "server": {
+    "type": "node",
+    "entry_point": "dist/mcp.js",
+    "mcp_config": {
+      "command": "node",
+      "args": [
+        "${__dirname}/dist/mcp.js"
+      ],
+      "env": {}
+    }
+  },
+  "tools": [
+    {
+      "name": "spec_score",
+      "description": "Score a spec on 4 axes (completeness, clarity, constraints, specificity) and return balance score and verdict"
+    },
+    {
+      "name": "spec_visualize",
+      "description": "Generate an SVG radar chart from spec scores"
+    },
+    {
+      "name": "spec_compare",
+      "description": "Side-by-side comparison of two scored specs with dual radar charts"
+    }
+  ],
+  "keywords": [
+    "spec",
+    "scoring",
+    "quality",
+    "radar-chart",
+    "mcp",
+    "llm",
+    "claude",
+    "specification",
+    "balance"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/openpoem/spec-score-mcp.git"
+  }
+}

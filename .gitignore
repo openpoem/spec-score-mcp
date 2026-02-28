@@ -27,6 +27,12 @@ proof-for*.md
 booking-*.md
 warc-*.md
 
+# Auth tokens
+.mcpregistry_*
+
+# Build artifacts (mcpb)
+*.mcpb
+
 # OS
 .DS_Store
 Thumbs.db
