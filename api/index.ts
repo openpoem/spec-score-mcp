@@ -84,6 +84,10 @@ const html = `<!DOCTYPE html>
       <div class="card-left"><div class="card-title">Smithery</div><div class="card-desc">MCP server registry listing</div></div>
       <div class="card-arrow">&rarr;</div>
     </a>
+    <a class="card" href="https://chatgpt.com/g/g-69a2c0c5693c8191b439da913df10834-spec-score-mcp" target="_blank">
+      <div class="card-left"><div class="card-title">ChatGPT <span class="badge">Custom GPT</span></div><div class="card-desc">Use Spec Score directly in ChatGPT</div></div>
+      <div class="card-arrow">&rarr;</div>
+    </a>
 
     <h2>API</h2>
     <div class="card" style="cursor:default"><div class="card-left"><div class="card-title">POST /api/score</div><div class="card-desc">Score a spec &rarr; JSON with balance, verdict, axes</div></div></div>

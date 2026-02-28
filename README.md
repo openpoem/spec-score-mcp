@@ -2,6 +2,7 @@
 
 [![npm](https://img.shields.io/npm/v/spec-score-mcp)](https://www.npmjs.com/package/spec-score-mcp)
 [![smithery badge](https://smithery.ai/badge/openpoem/spec-score-mcp)](https://smithery.ai/server/openpoem/spec-score-mcp)
+[![ChatGPT](https://img.shields.io/badge/ChatGPT-Custom_GPT-74aa9c)](https://chatgpt.com/g/g-69a2c0c5693c8191b439da913df10834-spec-score-mcp)
 
 Score your specs before Claude builds from them.
 
