@@ -150,6 +150,23 @@ Four rounds: 0.12 → 0.67 → 0.84 → 0.95. Each round fixed exactly one thing
 
 The scoring intelligence comes from Claude, not from the algorithm. The algorithm only measures balance.
 
+## Also available as
+
+| Platform | Link |
+|---|---|
+| **npm** | [`npx spec-score-mcp`](https://www.npmjs.com/package/spec-score-mcp) |
+| **ChatGPT** | [Custom GPT in ChatGPT Store](https://chatgpt.com/g/g-69a2c0c5693c8191b439da913df10834-spec-score-mcp) |
+| **Smithery** | [MCP server registry](https://smithery.ai/server/openpoem/spec-score-mcp) |
+| **HTTP API** | [spec-score-mcp.vercel.app](https://spec-score-mcp.vercel.app) |
+
+The HTTP API powers the Custom GPT and can be used standalone:
+
+| Endpoint | What it does |
+|---|---|
+| `POST /api/score` | Score a spec → JSON with balance, verdict, axes |
+| `POST /api/visualize` | Score a spec → SVG radar chart |
+| `POST /api/compare` | Compare two specs → side-by-side SVG |
+
 ## Project structure
 
 ```
@@ -157,6 +174,13 @@ src/
   mcp.ts        # MCP server (3 tools)
   score.ts      # Scoring engine
   visualize.ts  # SVG radar charts
+api/
+  score.ts      # HTTP API — JSON scoring
+  visualize.ts  # HTTP API — SVG radar chart
+  compare.ts    # HTTP API — side-by-side comparison
+  index.ts      # Landing page
+  privacy.ts    # Privacy policy
+  openapi.json  # OpenAPI spec (used by ChatGPT Actions)
 .claude/
   commands/
     scan.md     # /project:scan command
