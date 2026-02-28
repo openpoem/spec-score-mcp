@@ -1,6 +1,7 @@
 # Spec Score MCP
 
 [![npm](https://img.shields.io/npm/v/spec-score-mcp)](https://www.npmjs.com/package/spec-score-mcp)
+[![smithery badge](https://smithery.ai/badge/openpoem/spec-score-mcp)](https://smithery.ai/server/openpoem/spec-score-mcp)
 
 Score your specs before Claude builds from them.
 
