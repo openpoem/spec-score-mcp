@@ -15,9 +15,20 @@ node_modules/
 
 # Generated
 *.scored.md
+*.scored.pdf
 article.md
+DISTRIBUTION.md
+
+# Loose files (not part of the project)
+*.pdf
+*.png
+linkedin-post.md
+proof-for*.md
+booking-*.md
+warc-*.md
 
 # OS
 .DS_Store
 Thumbs.db
 .vercel
+.smithery
