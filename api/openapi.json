@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Spec Score API",
-    "description": "Score specs on 4 axes (completeness, clarity, constraints, specificity) and generate radar chart visualizations.",
+    "description": "Score specs on 4 axes and generate radar chart visualizations.",
     "version": "2.0.0"
   },
   "servers": [
@@ -20,18 +20,36 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ScoreRequest"
+                "type": "object",
+                "required": ["completeness", "clarity", "constraints", "specificity"],
+                "properties": {
+                  "completeness": { "type": "number", "description": "Completeness score 0.0-1.0" },
+                  "clarity": { "type": "number", "description": "Clarity score 0.0-1.0" },
+                  "constraints": { "type": "number", "description": "Constraints score 0.0-1.0" },
+                  "specificity": { "type": "number", "description": "Specificity score 0.0-1.0" },
+                  "weakest": { "type": "string", "description": "Which axis is weakest" },
+                  "tip": { "type": "string", "description": "One tip to improve the weakest axis" }
+                }
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "Scoring result with verdict and balance",
+            "description": "Scoring result",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ScoreResponse"
+                  "type": "object",
+                  "properties": {
+                    "verdict": { "type": "string" },
+                    "balance": { "type": "number" },
+                    "balance_label": { "type": "string" },
+                    "axes": { "type": "array", "items": { "type": "object", "properties": { "axis": { "type": "string" }, "value": { "type": "number" } } } },
+                    "weakest": { "type": "string" },
+                    "strongest": { "type": "string" },
+                    "tip": { "type": "string" }
+                  }
                 }
               }
             }
@@ -48,19 +66,27 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/VisualizeRequest"
+                "type": "object",
+                "required": ["completeness", "clarity", "constraints", "specificity"],
+                "properties": {
+                  "completeness": { "type": "number", "description": "Completeness score 0.0-1.0" },
+                  "clarity": { "type": "number", "description": "Clarity score 0.0-1.0" },
+                  "constraints": { "type": "number", "description": "Constraints score 0.0-1.0" },
+                  "specificity": { "type": "number", "description": "Specificity score 0.0-1.0" },
+                  "weakest": { "type": "string", "description": "Which axis is weakest" },
+                  "tip": { "type": "string", "description": "One tip to improve the weakest axis" },
+                  "title": { "type": "string", "description": "Optional title above the radar chart" }
+                }
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "SVG radar chart image",
+            "description": "SVG radar chart",
             "content": {
-              "image/svg+xml": {
-                "schema": {
-                  "type": "string"
-                }
+              "text/plain": {
+                "schema": { "type": "string" }
               }
             }
           }
@@ -76,134 +102,50 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CompareRequest"
+                "type": "object",
+                "required": ["left", "right"],
+                "properties": {
+                  "left": {
+                    "type": "object",
+                    "required": ["completeness", "clarity", "constraints", "specificity"],
+                    "properties": {
+                      "completeness": { "type": "number", "description": "Completeness score 0.0-1.0" },
+                      "clarity": { "type": "number", "description": "Clarity score 0.0-1.0" },
+                      "constraints": { "type": "number", "description": "Constraints score 0.0-1.0" },
+                      "specificity": { "type": "number", "description": "Specificity score 0.0-1.0" },
+                      "weakest": { "type": "string", "description": "Which axis is weakest" },
+                      "tip": { "type": "string", "description": "One tip to improve" },
+                      "title": { "type": "string", "description": "Title for left chart" }
+                    }
+                  },
+                  "right": {
+                    "type": "object",
+                    "required": ["completeness", "clarity", "constraints", "specificity"],
+                    "properties": {
+                      "completeness": { "type": "number", "description": "Completeness score 0.0-1.0" },
+                      "clarity": { "type": "number", "description": "Clarity score 0.0-1.0" },
+                      "constraints": { "type": "number", "description": "Constraints score 0.0-1.0" },
+                      "specificity": { "type": "number", "description": "Specificity score 0.0-1.0" },
+                      "weakest": { "type": "string", "description": "Which axis is weakest" },
+                      "tip": { "type": "string", "description": "One tip to improve" },
+                      "title": { "type": "string", "description": "Title for right chart" }
+                    }
+                  },
+                  "title": { "type": "string", "description": "Main title above both charts" }
+                }
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "Side-by-side SVG comparison chart",
+            "description": "Side-by-side SVG comparison",
             "content": {
-              "image/svg+xml": {
-                "schema": {
-                  "type": "string"
-                }
+              "text/plain": {
+                "schema": { "type": "string" }
               }
             }
           }
-        }
-      }
-    }
-  },
-  "components": {
-    "schemas": {
-      "AxisScores": {
-        "type": "object",
-        "required": ["completeness", "clarity", "constraints", "specificity"],
-        "properties": {
-          "completeness": {
-            "type": "number",
-            "minimum": 0,
-            "maximum": 1,
-            "description": "Can the LLM understand the full scope? (0=vague idea, 1=complete)"
-          },
-          "clarity": {
-            "type": "number",
-            "minimum": 0,
-            "maximum": 1,
-            "description": "Is it unambiguous? (0=multiple interpretations, 1=one clear interpretation)"
-          },
-          "constraints": {
-            "type": "number",
-            "minimum": 0,
-            "maximum": 1,
-            "description": "Are boundaries defined? (0=no limits, 1=clear scope and non-goals)"
-          },
-          "specificity": {
-            "type": "number",
-            "minimum": 0,
-            "maximum": 1,
-            "description": "Concrete testable details? (0=no criteria, 1=verifiable outcomes)"
-          },
-          "weakest": {
-            "type": "string",
-            "description": "Which axis is weakest"
-          },
-          "tip": {
-            "type": "string",
-            "description": "One concrete suggestion to improve the weakest axis"
-          }
-        }
-      },
-      "ScoreRequest": {
-        "$ref": "#/components/schemas/AxisScores"
-      },
-      "VisualizeRequest": {
-        "allOf": [
-          { "$ref": "#/components/schemas/AxisScores" },
-          {
-            "type": "object",
-            "properties": {
-              "title": {
-                "type": "string",
-                "description": "Optional title above the radar chart"
-              }
-            }
-          }
-        ]
-      },
-      "CompareRequest": {
-        "type": "object",
-        "required": ["left", "right"],
-        "properties": {
-          "left": {
-            "allOf": [
-              { "$ref": "#/components/schemas/AxisScores" },
-              {
-                "type": "object",
-                "properties": {
-                  "title": { "type": "string", "description": "Title for left chart" }
-                }
-              }
-            ]
-          },
-          "right": {
-            "allOf": [
-              { "$ref": "#/components/schemas/AxisScores" },
-              {
-                "type": "object",
-                "properties": {
-                  "title": { "type": "string", "description": "Title for right chart" }
-                }
-              }
-            ]
-          },
-          "title": {
-            "type": "string",
-            "description": "Main title above both charts"
-          }
-        }
-      },
-      "ScoreResponse": {
-        "type": "object",
-        "properties": {
-          "verdict": { "type": "string" },
-          "balance": { "type": "number" },
-          "balance_label": { "type": "string", "enum": ["BALANCED", "MODERATE", "SPIKED"] },
-          "axes": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "axis": { "type": "string" },
-                "value": { "type": "number" }
-              }
-            }
-          },
-          "weakest": { "type": "string" },
-          "strongest": { "type": "string" },
-          "tip": { "type": "string" }
         }
       }
     }
