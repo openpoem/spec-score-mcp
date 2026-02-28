@@ -3,6 +3,7 @@
 [![npm](https://img.shields.io/npm/v/spec-score-mcp)](https://www.npmjs.com/package/spec-score-mcp)
 [![smithery badge](https://smithery.ai/badge/openpoem/spec-score-mcp)](https://smithery.ai/server/openpoem/spec-score-mcp)
 [![ChatGPT](https://img.shields.io/badge/ChatGPT-Custom_GPT-74aa9c)](https://chatgpt.com/g/g-69a2c0c5693c8191b439da913df10834-spec-score-mcp)
+[![MCP Registry](https://img.shields.io/badge/MCP_Registry-io.github.openpoem-blue)](https://registry.modelcontextprotocol.io)
 
 Score your specs before Claude builds from them.
 
@@ -155,8 +156,10 @@ The scoring intelligence comes from Claude, not from the algorithm. The algorith
 | Platform | Link |
 |---|---|
 | **npm** | [`npx spec-score-mcp`](https://www.npmjs.com/package/spec-score-mcp) |
+| **MCP Registry** | [`io.github.openpoem/spec-score-mcp`](https://registry.modelcontextprotocol.io) |
 | **ChatGPT** | [Custom GPT in ChatGPT Store](https://chatgpt.com/g/g-69a2c0c5693c8191b439da913df10834-spec-score-mcp) |
-| **Smithery** | [MCP server registry](https://smithery.ai/server/openpoem/spec-score-mcp) |
+| **Smithery** | [MCP server directory](https://smithery.ai/server/openpoem/spec-score-mcp) |
+| **Glama** | [MCP server directory](https://glama.ai/mcp/servers/spec-score-mcp) |
 | **HTTP API** | [spec-score-mcp.vercel.app](https://spec-score-mcp.vercel.app) |
 
 The HTTP API powers the Custom GPT and can be used standalone:

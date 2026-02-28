@@ -73,7 +73,7 @@ const html = `<!DOCTYPE html>
 
     <h2>Get it</h2>
     <a class="card" href="https://www.npmjs.com/package/spec-score-mcp" target="_blank">
-      <div class="card-left"><div class="card-title">npm <span class="badge">v2.0.0</span></div><div class="card-desc"><code>npx spec-score-mcp</code></div></div>
+      <div class="card-left"><div class="card-title">npm <span class="badge">v2.0.2</span></div><div class="card-desc"><code>npx spec-score-mcp</code></div></div>
       <div class="card-arrow">&rarr;</div>
     </a>
     <a class="card" href="https://github.com/openpoem/spec-score-mcp" target="_blank">
@@ -86,6 +86,10 @@ const html = `<!DOCTYPE html>
     </a>
     <a class="card" href="https://chatgpt.com/g/g-69a2c0c5693c8191b439da913df10834-spec-score-mcp" target="_blank">
       <div class="card-left"><div class="card-title">ChatGPT <span class="badge">Custom GPT</span></div><div class="card-desc">Use Spec Score directly in ChatGPT</div></div>
+      <div class="card-arrow">&rarr;</div>
+    </a>
+    <a class="card" href="https://glama.ai/mcp/servers/spec-score-mcp" target="_blank">
+      <div class="card-left"><div class="card-title">Glama</div><div class="card-desc">MCP server directory</div></div>
       <div class="card-arrow">&rarr;</div>
     </a>
 
