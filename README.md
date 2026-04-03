@@ -1,8 +1,5 @@
 # Spec Score MCP
 
-[![npm](https://img.shields.io/npm/v/spec-score-mcp)](https://www.npmjs.com/package/spec-score-mcp)
-[![smithery badge](https://smithery.ai/badge/openpoem/spec-score-mcp)](https://smithery.ai/server/openpoem/spec-score-mcp)
-[![MCP Registry](https://img.shields.io/badge/MCP_Registry-io.github.openpoem-blue)](https://registry.modelcontextprotocol.io)
 
 Score your specs before Claude builds from them.
 
@@ -46,11 +43,12 @@ Not SHIP IT yet? The tool tells you which axis is weakest and what to add. Fix t
 ## Install
 
 ```bash
-npm i -g spec-score-mcp
-claude mcp add spec-score -- npx spec-score-mcp
+git clone https://github.com/openpoem/spec-score-mcp.git
+cd spec-score-mcp && npm install && npm run build
+claude mcp add spec-score -- node $(pwd)/dist/mcp.js
 ```
 
-That's it. The 3 tools are now available in every Claude Code session.
+The 3 tools are now available in every Claude Code session.
 
 ## Usage
 
@@ -150,14 +148,6 @@ Four rounds: 0.12 → 0.67 → 0.84 → 0.95. Each round fixed exactly one thing
 
 The scoring intelligence comes from Claude, not from the algorithm. The algorithm only measures balance.
 
-## Also available as
-
-| Platform | Link |
-|---|---|
-| **npm** | [`npx spec-score-mcp`](https://www.npmjs.com/package/spec-score-mcp) |
-| **MCP Registry** | [`io.github.openpoem/spec-score-mcp`](https://registry.modelcontextprotocol.io) |
-| **Smithery** | [MCP server directory](https://smithery.ai/server/openpoem/spec-score-mcp) |
-| **Glama** | [MCP server directory](https://glama.ai/mcp/servers/spec-score-mcp) |
 ## Project structure
 
 ```
