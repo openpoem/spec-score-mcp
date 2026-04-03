@@ -1,0 +1,41 @@
+# Environment
+.env
+.env.*
+
+# IDE
+.idea
+.vscode
+.claude/
+*.swp
+*.swo
+
+# Build artifacts
+spec-score
+dist/
+node_modules/
+
+# Generated
+*.scored.md
+*.scored.pdf
+article.md
+DISTRIBUTION.md
+
+# Loose files (not part of the project)
+*.pdf
+*.png
+linkedin-post.md
+proof-for*.md
+booking-*.md
+warc-*.md
+
+# Auth tokens
+.mcpregistry_*
+
+# Build artifacts (mcpb)
+*.mcpb
+
+# OS
+.DS_Store
+Thumbs.db
+.vercel
+.smithery
