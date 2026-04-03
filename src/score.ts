@@ -64,7 +64,8 @@ export function scoreFromAxes(axes: AxisScores): ScoreResult {
 
   const mean = vector.reduce((s, x) => s + x, 0) / 4;
   const variance = vector.reduce((s, x) => s + (x - mean) ** 2, 0) / 4;
-  const balance = mean < 0.01 ? 0 : Math.max(0, 1 - Math.sqrt(variance) / mean);
+  const CV_MAX = Math.sqrt(3); // max CV for a 4-element unit vector: sqrt(n-1)
+  const balance = mean < 0.01 ? 0 : 1 - Math.sqrt(variance) / (mean * CV_MAX);
 
   const verdict = classify(vector, balance, mean);
 
@@ -89,8 +90,8 @@ export function scoreFromAxes(axes: AxisScores): ScoreResult {
 }
 
 function classify(v: Vec, balance: number, avg: number): string {
-  if (balance > 0.75 && avg > 0.45) return 'SHIP IT - spec is ready for the machine';
-  if (balance > 0.6 && avg > 0.35) return 'ALMOST - minor gaps, review needed';
+  if (balance > 0.85 && avg > 0.45) return 'SHIP IT - spec is ready for the machine';
+  if (balance > 0.75 && avg > 0.35) return 'ALMOST - minor gaps, review needed';
   if (v[0] > 0.6 && v[3] < 0.2) return 'VAGUE - well-structured but too abstract';
   if (v[1] > 0.6 && v[2] < 0.2) return 'UNBOUNDED - clear goal, no limits defined';
   if (v[2] > 0.5 && v[1] < 0.2) return 'OVER-CONSTRAINED - lots of rules, unclear purpose';
@@ -99,7 +100,7 @@ function classify(v: Vec, balance: number, avg: number): string {
 }
 
 export function balanceLabel(balance: number): string {
-  if (balance > 0.75) return 'BALANCED';
-  if (balance > 0.5) return 'MODERATE';
+  if (balance > 0.85) return 'BALANCED';
+  if (balance > 0.70) return 'MODERATE';
   return 'SPIKED';
 }

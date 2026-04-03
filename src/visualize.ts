@@ -13,20 +13,20 @@ export interface ChartConfig {
 }
 
 function color(balance: number): string {
-  if (balance > 0.75) return '#22c55e'; // green
-  if (balance > 0.5) return '#eab308';  // yellow
+  if (balance > 0.85) return '#22c55e'; // green
+  if (balance > 0.70) return '#eab308';  // yellow
   return '#ef4444';                       // red
 }
 
 function bgColor(balance: number): string {
-  if (balance > 0.75) return '#22c55e20';
-  if (balance > 0.5) return '#eab30820';
+  if (balance > 0.85) return '#22c55e20';
+  if (balance > 0.70) return '#eab30820';
   return '#ef444420';
 }
 
 function verdictBg(balance: number): string {
-  if (balance > 0.75) return '#22c55e';
-  if (balance > 0.5) return '#eab308';
+  if (balance > 0.85) return '#22c55e';
+  if (balance > 0.70) return '#eab308';
   return '#ef4444';
 }
 
@@ -47,7 +47,7 @@ export function generateRadarSVG(config: ChartConfig): string {
   });
 
   // Grid diamonds
-  const gridLevels = [0.25, 0.5, 0.75, 1.0];
+  const gridLevels = [0.25, 0.5, 0.85, 1.0];
   const gridLines = gridLevels.map(level => {
     const pts = angles.map(a => point(a, r * level));
     return `<polygon points="${pts.map(p => `${p.x},${p.y}`).join(' ')}" fill="none" stroke="#333" stroke-width="0.5" stroke-dasharray="${level < 1 ? '3,3' : 'none'}" />`;

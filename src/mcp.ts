@@ -139,9 +139,9 @@ function createServer() {
                 axes: result.axes,
                 weakest: result.details.weakest,
                 strongest: result.details.strongest,
-                tip: result.balance < 0.6
+                tip: result.balance < 0.75
                   ? `Your weakest axis is "${result.details.weakest}". Strengthen it to improve LLM output quality.`
-                  : result.balance < 0.75
+                  : result.balance < 0.85
                   ? 'Almost there. Small improvements will make this spec reliable for LLM consumption.'
                   : 'This spec is well-balanced. LLM output should be reliable.',
               }, null, 2),
