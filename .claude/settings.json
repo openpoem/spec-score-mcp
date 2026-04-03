@@ -1,0 +1,48 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm view:*)",
+      "Bash(find:*)",
+      "WebFetch(domain:smithery.ai)",
+      "Bash(wc -l /Users/ronkoldeweid/Projects/spec-score-mcp/dist/*.js)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:www.oreateai.com)",
+      "Bash(curl -sL https://raw.githubusercontent.com/jsonallen/perplexity-mcp/main/smithery.yaml)",
+      "Bash(curl -sL https://raw.githubusercontent.com/e2b-dev/mcp-server/main/smithery.yaml)",
+      "WebFetch(domain:thinkthroo.com)",
+      "WebFetch(domain:dev.to)",
+      "WebFetch(domain:medium.com)",
+      "WebFetch(domain:deepwiki.com)",
+      "Bash(smithery auth login)",
+      "Bash(gh search repos smithery-ai/docs --json fullName,description --limit 5)",
+      "Bash(gh search code \"smithery.yaml\" \"deno run\" --json path,repository --limit 10)",
+      "Bash(smithery publish)",
+      "Bash(gh search code \"smithery.yaml\" \"deno\" filename:smithery.yaml --json path,repository --limit 10)",
+      "Bash(smithery publish --help)",
+      "Bash(smithery --help)",
+      "Bash(smithery mcp --help)",
+      "Bash(smithery mcp publish --help)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" https://smithery.ai/server/openpoem/spec-score-mcp)",
+      "Bash(npx vercel --force)",
+      "Bash(npx vercel --prod)",
+      "Bash(curl -s -X POST https://spec-score-mcp.vercel.app/api/score -H \"Content-Type: application/json\" -d '{\"\"completeness\"\":0.8,\"\"clarity\"\":0.9,\"\"constraints\"\":0.3,\"\"specificity\"\":0.7,\"\"weakest\"\":\"\"constraints\"\",\"\"tip\"\":\"\"Add non-goals\"\"}')",
+      "Bash(npx vercel --prod --force)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" https://spec-score-mcp.vercel.app/)",
+      "WebFetch(domain:glama.ai)",
+      "WebFetch(domain:pulsemcp.com)",
+      "mcp__repo-cleanup-local__detect_obsolete_files",
+      "WebFetch(domain:support.claude.com)",
+      "WebFetch(domain:registry.modelcontextprotocol.io)",
+      "WebFetch(domain:static.modelcontextprotocol.io)",
+      "Bash(npm version patch --no-git-tag-version)",
+      "Bash(curl -L \"https://github.com/modelcontextprotocol/registry/releases/latest/download/mcp-publisher_darwin_arm64.tar.gz\")",
+      "Bash(tar xz -C /usr/local/bin mcp-publisher)",
+      "Bash(mcp-publisher init)",
+      "Bash(mcp-publisher login github)",
+      "Bash(mcp-publisher publish)"
+    ],
+    "additionalDirectories": [
+      "/Users/ronkoldeweid/Projects/mediazoneblog/src/components"
+    ]
+  }
+}
